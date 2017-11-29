@@ -12,6 +12,6 @@ Pod::Spec.new do |s|
     :tag => s.version.to_s
   }
   s.platform	 = :ios, '7.0'
-  s.source_files = 'RSLockScreen/*.{h,m}'
+  s.source_files = 'QReader/*.{h,m}'
   s.requires_arc = true
 end
