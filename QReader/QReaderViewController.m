@@ -64,12 +64,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (self.codeReader.previewLayer.connection.isVideoOrientationSupported) {
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-        
-        self.codeReader.previewLayer.connection.videoOrientation = [QReader videoOrientationFromInterfaceOrientation:
-                                                                    orientation];
-    }
+    [self updateOrientation];
     
     [self.codeReader startScanning];
 }
@@ -88,6 +83,15 @@
 
 #pragma mark - Controlling the Reader
 
+- (void)updateOrientation {
+    if (self.codeReader.previewLayer.connection.isVideoOrientationSupported) {
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        
+        self.codeReader.previewLayer.connection.videoOrientation = [QReader videoOrientationFromInterfaceOrientation:
+                                                                    orientation];
+    }
+}
+
 - (void)startScanning {
     [_codeReader startScanning];
 }
@@ -99,15 +103,9 @@
 #pragma mark - Managing the Orientation
 
 - (void)orientationChanged:(NSNotification *)notification {
-#warning edit
     [self.view setNeedsDisplay];
     
-    if (self.codeReader.previewLayer.connection.isVideoOrientationSupported) {
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-        
-        self.codeReader.previewLayer.connection.videoOrientation = [QReader videoOrientationFromInterfaceOrientation:
-                                                                orientation];
-    }
+    [self updateOrientation];
 }
 
 #pragma mark - QReaderDelegate
