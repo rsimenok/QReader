@@ -64,6 +64,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    if (self.codeReader.previewLayer.connection.isVideoOrientationSupported) {
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        
+        self.codeReader.previewLayer.connection.videoOrientation = [QReader videoOrientationFromInterfaceOrientation:
+                                                                    orientation];
+    }
+    
     [self.codeReader startScanning];
 }
 
